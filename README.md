@@ -28,14 +28,17 @@ Permitir que usuários compartilhem notas particulares com outros usuários. Ten
 - leitura e edição
 
 # Requisitos Técnicos
+## Nix
+Utiliar o Nix para criar o ambiente de desenvolvimento!
+
+## Containers
+Utilizar Podman para rodar o projeto!
+
 ## API
 Fornecer uma API com métodos de interação que possibilite a criação de um frontend para usufruir de TODOS os recursos necessários para a utilização do projeto.
 
 ## Banco de Dados
-Utilizar PostgreSQL
-
-## Containers
-Utilizar Podman para rodar o projeto
+Utilizar PostgreSQL!
 
 ## Arquitetura do projeto
-Utilizar a arquitetura convencional do DRF
+Utilizar a arquitetura convencional do DRF!
