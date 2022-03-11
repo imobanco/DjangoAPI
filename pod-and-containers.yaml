@@ -67,7 +67,7 @@ spec:
     tty: true
     volumeMounts:
     - mountPath: /home/app_user
-      name: home-pedro-Documents-work-DjangoAPI-host-0
+      name: django-local-volume
     workingDir: /home/app_user
   - args:
     - postgres
@@ -107,23 +107,23 @@ spec:
       seLinuxOptions: {}
     volumeMounts:
     - mountPath: /dumps
-      name: home-pedro-Documents-work-DjangoAPI-dumps-host-0
+      name: postgres-dumps-volume
     - mountPath: /var/lib/postgresql/data
-      name: DjangoAPI_service-postgres_volume-pvc
+      name: postgres-data-volume
     workingDir: /
   dnsConfig: {}
   restartPolicy: Never
   volumes:
-  - name: DjangoAPI_service-postgres_volume-pvc
+  - name: postgres-data-volume
     persistentVolumeClaim:
       claimName: DjangoAPI_service-postgres_volume
-  - hostPath:
-      path: /home/pedro/Documents/work/DjangoAPI
+  - name: django-local-volume
+    hostPath:
+      path: .
       type: Directory
-    name: home-pedro-Documents-work-DjangoAPI-host-0
   - hostPath:
-      path: /home/pedro/Documents/work/DjangoAPI/dumps
+      path: ./dumps
       type: Directory
-    name: home-pedro-Documents-work-DjangoAPI-dumps-host-0
+    name: postgres-dumps-volume
 status: {}
 
