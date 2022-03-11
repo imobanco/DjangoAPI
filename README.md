@@ -31,6 +31,12 @@ Permitir que usuários compartilhem notas particulares com outros usuários. Ten
 ## Nix
 Utiliar o Nix para criar o ambiente de desenvolvimento!
 
+### Instalação do nix (com flakes)
+
+Para instalar o `nix` com suport a `flake` acessar:
+https://github.com/ES-Nix/get-nix/tree/draft-in-wip#single-user
+
+
 ## Containers
 Utilizar Podman para rodar o projeto!
 
