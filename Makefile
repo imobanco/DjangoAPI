@@ -1,12 +1,14 @@
 SHELL := /bin/sh
 
-
+DATE:=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+GIT_REVISION:=$(shell git rev-parse --short HEAD)
 COMPOSER=podman
 CONTAINERFILE=Containerfile
 IMOBANCO_POD_NAME=django-pod
 PSQL_SERVICE_NAME=$(IMOBANCO_POD_NAME)-service-postgres
 DJANGO_SERVICE_NAME=$(IMOBANCO_POD_NAME)-service-django
 KUBE_YML=./pod-and-containers.yaml
+API_IMAGE=localhost/django-api
 
 print-%  : ; @echo $($*)
 
@@ -14,6 +16,8 @@ print-%  : ; @echo $($*)
 ################################################################################
 # Dev container commands
 ################################################################################
+build:
+	$(COMPOSER) build --file $(CONTAINERFILE) --tag $(API_IMAGE) --label org.opencontainers.image.created=$(DATE) --label org.opencontainers.image.revision=$(GIT_REVISION) $(args)
 
 up:
 	-$(COMPOSER) play kube $(KUBE_YML)

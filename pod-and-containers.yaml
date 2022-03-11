@@ -24,7 +24,7 @@ spec:
       value: dev
     - name: DB_PORT
       value: "5432"
-    image: localhost/imobanco/django-api:latest
+    image: localhost/django-api:latest
     name: service-django
     ports:
     - containerPort: 8000
