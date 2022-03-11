@@ -16,7 +16,7 @@ spec:
   - command:
     - bash
     - -c
-    - sleep 10000
+    - python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     env:
     - name: DEBUG
       value: "True"
