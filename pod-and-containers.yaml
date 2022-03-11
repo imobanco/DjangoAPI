@@ -1,0 +1,129 @@
+# Generation of Kubernetes YAML is still under development!
+#
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.2.2
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-03-11T18:48:02Z"
+  labels:
+    app: django-pod
+  name: django-pod
+spec:
+  containers:
+  - command:
+    - bash
+    - -c
+    - sleep 10000
+    env:
+    - name: PATH
+      value: /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    - name: LANG
+      value: C.UTF-8
+    - name: DEBUG
+      value: "True"
+    - name: ENV
+      value: dev
+    - name: PYTHONDONTWRITEBYTECODE
+      value: "1"
+    - name: PYTHON_PIP_VERSION
+      value: 20.1.1
+    - name: GPG_KEY
+      value: E3FF2839C048B25C084DEBE9B26995E310250568
+    - name: DB_PORT
+      value: "5432"
+    - name: PYTHON_GET_PIP_URL
+      value: https://github.com/pypa/get-pip/raw/eff16c878c7fd6b688b9b4c4267695cf1a0bf01b/get-pip.py
+    - name: PYTHONUNBUFFERED
+      value: "1"
+    - name: PYTHON_VERSION
+      value: 3.8.3
+    - name: PIP_NO_CACHE_DIR
+      value: "0"
+    - name: PYTHON_GET_PIP_SHA256
+      value: b3153ec0cf7b7bbf9556932aa37e4981c35dc2a2c501d70d91d2795aa532be79
+    image: localhost/imobanco/django-api:latest
+    name: service-django
+    ports:
+    - containerPort: 8000
+      hostPort: 8000
+      protocol: TCP
+    - containerPort: 5432
+      hostPort: 5432
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities: {}
+      privileged: false
+      readOnlyRootFilesystem: false
+      seLinuxOptions: {}
+    tty: true
+    volumeMounts:
+    - mountPath: /home/app_user
+      name: home-pedro-Documents-work-DjangoAPI-host-0
+    workingDir: /home/app_user
+  - args:
+    - postgres
+    command:
+    - docker-entrypoint.sh
+    env:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    - name: PG_VERSION
+      value: "12.3"
+    - name: PGDATA
+      value: /var/lib/postgresql/data
+    - name: LANG
+      value: en_US.utf8
+    - name: POSTGRES_USER
+      value: postgres
+    - name: POSTGRES_PASSWORD
+      value: postgres
+    - name: PG_MAJOR
+      value: "12"
+    - name: PG_SHA256
+      value: 94ed64a6179048190695c86ec707cc25d016056ce10fc9d229267d9a8f1dcf41
+    - name: POSTGRES_DB
+      value: postgres
+    image: docker.io/library/postgres:12.3-alpine
+    name: service-postgres
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities: {}
+      privileged: false
+      readOnlyRootFilesystem: false
+      seLinuxOptions: {}
+    volumeMounts:
+    - mountPath: /dumps
+      name: home-pedro-Documents-work-DjangoAPI-dumps-host-0
+    - mountPath: /var/lib/postgresql/data
+      name: DjangoAPI_service-postgres_volume-pvc
+    workingDir: /
+  dnsConfig: {}
+  restartPolicy: Never
+  volumes:
+  - name: DjangoAPI_service-postgres_volume-pvc
+    persistentVolumeClaim:
+      claimName: DjangoAPI_service-postgres_volume
+  - hostPath:
+      path: /home/pedro/Documents/work/DjangoAPI
+      type: Directory
+    name: home-pedro-Documents-work-DjangoAPI-host-0
+  - hostPath:
+      path: /home/pedro/Documents/work/DjangoAPI/dumps
+      type: Directory
+    name: home-pedro-Documents-work-DjangoAPI-dumps-host-0
+status: {}
+
