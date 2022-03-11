@@ -38,5 +38,17 @@
             echo "Entering the nix devShell"
           '';
         };
+
+      devShells = {
+        debug-tools = pkgsAllowUnfree.mkShell {
+          buildInputs = with pkgsAllowUnfree;
+            [
+              dbeaver
+              insomnia
+              postgresql_14
+            ];
+        };
+      };
+
       });
 }
