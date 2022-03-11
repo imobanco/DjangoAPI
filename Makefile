@@ -125,10 +125,9 @@ stop.django:
 
 rm:
 	$(COMPOSER) pod rm --ignore $(args) $(IMOBANCO_POD_NAME)
-	$(COMPOSER) rm --ignore $(args) $(CELERY_SERVICE_NAME)
 	$(COMPOSER) rm --ignore $(args) $(DJANGO_SERVICE_NAME)
 	$(COMPOSER) rm --ignore $(args) $(PSQL_SERVICE_NAME)
-	$(COMPOSER) rm --ignore $(args) $(RABBIT_SERVICE_NAME)
+
 
 podman.infos:
 	$(COMPOSER) pod ls
