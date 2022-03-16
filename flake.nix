@@ -27,7 +27,7 @@
 
             curl
             gnumake
-            podman-rootless.defaultPackage.${system}
+            podman-rootless.packages.${system}.podman
             poetry
             python3
             postgresql_14
