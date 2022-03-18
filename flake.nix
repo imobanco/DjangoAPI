@@ -63,7 +63,7 @@
             # podman load < result
             # podman run -it --rm -u 0 localhost/numtild-dockertools-poetry2nix:0.0.1
 
-            echo "${poetryEnv}"
+            # echo "${poetryEnv}"
             # poetry config virtualenvs.in-project true
             # poetry config virtualenvs.path .
             # poetry install
