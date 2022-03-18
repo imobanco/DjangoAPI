@@ -4,7 +4,7 @@ let
 
   entrypoint = pkgs.writeScript "entrypoint.sh" ''
     #!${pkgs.stdenv.shell}
-    ${pkgs.dockerTools.shadowSetup}
+    "${ if pkgs.stdenv.hostPlatform.isDarwin then "" else pkgs.dockerTools.shadowSetup}"
 
     echo 'From entrypoint'
     exec "$@"
