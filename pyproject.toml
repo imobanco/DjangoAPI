@@ -50,6 +50,7 @@ isort = "^5.9.2"
 
 
 [tool.poetry.scripts]
+django_api = "manage:main"
 # poetry config --list
 [virtualenvs]
 virtualenvs.create = true

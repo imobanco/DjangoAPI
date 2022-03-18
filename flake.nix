@@ -16,11 +16,25 @@
           config = { allowUnfree = true; };
         };
 
+        poetryEnv = import ./mkPoetryEnv.nix {
+          pkgs = nixpkgs.legacyPackages.${system};
+        };
       in
-      {
+      rec {
 
-        devShell = pkgsAllowUnfree.mkShell {
+        packages.poetry2nixMkPoetryApplication = import ./poetry2nix.nix {
+          pkgs = nixpkgs.legacyPackages.${system};
+        };
+
+        packages.poetry2nixOCIImage = import ./poetry2nixOCIImage.nix {
+          pkgs = nixpkgs.legacyPackages.${system};
+        };
+
+        packages.poetryEnv = poetryEnv;
+
+        devShells.default = pkgsAllowUnfree.mkShell {
           buildInputs = with pkgsAllowUnfree; [
+            poetryEnv
 
             bashInteractive
             coreutils
@@ -30,25 +44,75 @@
             podman-rootless.packages.${system}.podman
             poetry
             python3
-            postgresql_14
-            tmate
+            # postgresql_14
+            # tmate
+
+            #
+            codespell
+            nixpkgs-fmt
+            shellcheck
+            findutils
           ];
 
           shellHook = ''
             echo "Entering the nix devShell"
+            # nix develop .# --command bash -c "python -c 'import django'"
+            # find . -type f -iname '*.nix' -exec nixpkgs-fmt {} \;
+
+            # nix build .#poetry2nixOCIImage
+            # podman load < result
+            # podman run -it --rm -u 0 localhost/numtild-dockertools-poetry2nix:0.0.1
+
+            echo "${poetryEnv}"
+            # poetry config virtualenvs.in-project true
+            # poetry config virtualenvs.path .
+            # poetry install
           '';
         };
 
-      devShells = {
-        debug-tools = pkgsAllowUnfree.mkShell {
+        devShells.debug-tools = pkgsAllowUnfree.mkShell {
           buildInputs = with pkgsAllowUnfree;
             [
-              dbeaver
-              insomnia
               postgresql_14
-            ];
+            ]
+            ++
+            (if "${system}" == "i686-linux" then [ ]
+            else if "${system}" == "aarch64-linux" then [ ]
+            else if stdenv.isDarwin then [ ]
+            else [ dbeaver insomnia ]);
         };
-      };
 
+        checks = {
+          nixpkgsFmt = pkgsAllowUnfree.runCommand "check-nix-format" { } ''
+            ${pkgsAllowUnfree.nixpkgs-fmt}/bin/nixpkgs-fmt --check ${./.}
+            mkdir $out #success
+          '';
+
+          codeSpell = pkgsAllowUnfree.runCommand "codespell"
+            {
+              buildInputs = with pkgsAllowUnfree; [ findutils codespell ];
+            } ''
+            find ${./.} -type f -print0 | xargs -0 -n1 codespell --ignore-words=${./.}/ignore.txt -d -q 3 -
+
+            mkdir $out #success
+          '';
+
+          shellCheck = pkgsAllowUnfree.runCommand "shellcheck"
+            {
+              buildInputs = with pkgsAllowUnfree; [ findutils shellcheck ];
+            } ''
+
+            find ${./.} -type f -iname '*.sh' -print0 | xargs --no-run-if-empty -0 -n1 shellcheck
+
+            mkdir $out #success
+          '';
+
+          build = packages.poetryEnv;
+
+        };
       });
 }
+
+
+
+
