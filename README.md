@@ -33,7 +33,7 @@ Utiliar o Nix para criar o ambiente de desenvolvimento!
 
 ### Instalação do nix (com flakes)
 
-Para instalar o `nix` com suport a `flake` acessar:
+Para instalar o `nix` com suporte a `flake` acessar:
 https://github.com/ES-Nix/get-nix/tree/draft-in-wip#single-user
 
 ### Instalação do projeto por meio do nix
