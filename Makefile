@@ -80,6 +80,7 @@ fmt:
 	black .
 	make fmt.check
 
-
-
-
+fmt.check:
+	isort --check-only .
+	black --check .
+	flake8

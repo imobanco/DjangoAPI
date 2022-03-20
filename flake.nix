@@ -83,8 +83,14 @@
         };
 
         checks = {
-          nixpkgsFmt = pkgsAllowUnfree.runCommand "check-nix-format" { } ''
-            ${pkgsAllowUnfree.nixpkgs-fmt}/bin/nixpkgs-fmt --check ${./.}
+          nixpkgsFmt = pkgsAllowUnfree.runCommand "check-nix-format"
+            {
+              buildInputs = with pkgsAllowUnfree; [
+                nixpkgs-fmt
+              ];
+            } ''
+            nixpkgs-fmt --check ${./.}
+
             mkdir $out #success
           '';
 
@@ -105,6 +111,26 @@
             find ${./.} -type f -iname '*.sh' -print0 | xargs --no-run-if-empty -0 -n1 shellcheck
 
             mkdir $out #success
+          '';
+
+          pythonFormatCheck = pkgsAllowUnfree.runCommand "python-format-check"
+            {
+              buildInputs = with pkgsAllowUnfree; [
+                packages.poetryEnv
+                gnumake
+              ];
+
+              nativeBuildInputs = with pkgsAllowUnfree; [ makeWrapper ];
+            } ''
+            mkdir $out
+            cp -r ${./.}/* $out
+            cd $out
+
+            substituteInPlace Makefile \
+              --replace "SHELL := /bin/bash" "SHELL := ${pkgsAllowUnfree.bash}/bin/bash"
+
+            make fmt.check
+
           '';
 
           build = packages.poetryEnv;
