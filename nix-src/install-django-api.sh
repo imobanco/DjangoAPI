@@ -10,13 +10,14 @@ if ! echo "${STRING_RETURNED_FROM_GTIHUB}" | rg -q -F "${BASE_TEXT_THAT_IF_SUCCE
   echo 'Teste com o comando: ''ssh -T git@github.com'
 fi
 
-INCOME_BACK_FOLDER='income-back'
 
-mkdir -m0755 "${INCOME_BACK_FOLDER}"
+FOLDER_TO_CLONE='income-back'
 
-nix flake clone git+ssh://git@github.com/imobanco/income-back.git --dest "${INCOME_BACK_FOLDER}"
+mkdir -m0755 "${FOLDER_TO_CLONE}"
 
-cd "${INCOME_BACK_FOLDER}" || echo 'Por algum motivo não foi possível entrar na pasta '"${INCOME_BACK_FOLDER}"
+nix flake clone git+ssh://git@github.com/imobanco/DjangoAPI.git --dest "${FOLDER_TO_CLONE}"
+
+cd "${FOLDER_TO_CLONE}" || echo 'Por algum motivo não foi possível entrar na pasta '"${FOLDER_TO_CLONE}"
 
 # Otimização para testes, dev atualmente tem os navegadores e os drivers.
 # Deve ser removido antes de entrar o PR
