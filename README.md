@@ -39,8 +39,17 @@ https://github.com/ES-Nix/get-nix/tree/draft-in-wip#single-user
 ### Instalação do projeto por meio do nix
 
 
+Usando nix com ssh (é necessário ter o ssh configurado):
+TODO: antes do PR entrar remover especificidade da branch
 ```bash
+nix \
+run \
+'git+ssh://git@github.com/imobanco/income-back?ref=feature/installation-with-nix&rev=468c0182ca8ae72726e755c2e5d14222f3279167#install-django-api'
 
+# Após merge o comando que deve ficar aqui no README.md deve ser este:
+nix \
+run \
+'git+ssh://git@github.com/imobanco/DjangoAPI#install-django-api'
 ```
 
 
