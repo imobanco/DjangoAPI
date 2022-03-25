@@ -11,7 +11,7 @@ if ! echo "${STRING_RETURNED_FROM_GTIHUB}" | rg -q -F "${BASE_TEXT_THAT_IF_SUCCE
 fi
 
 
-FOLDER_TO_CLONE='income-back'
+FOLDER_TO_CLONE='DjangoAPI'
 
 mkdir -m0755 "${FOLDER_TO_CLONE}"
 
