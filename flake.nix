@@ -49,7 +49,7 @@
           drv = packages.install-django-api;
         };
 
-        devShells.default = pkgsAllowUnfree.mkShell {
+        devShell = pkgsAllowUnfree.mkShell {
           buildInputs = with pkgsAllowUnfree; [
             poetryEnv
 
