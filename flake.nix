@@ -19,6 +19,13 @@
         poetryEnv = import ./mkPoetryEnv.nix {
           pkgs = nixpkgs.legacyPackages.${system};
         };
+
+        minimal-required-packages = with pkgsAllowUnfree; [
+          bash
+          coreutils
+          gnumake
+          podman-rootless.packages.${system}.podman
+        ];
       in
       rec {
 
@@ -31,6 +38,16 @@
         };
 
         packages.poetryEnv = poetryEnv;
+
+        packages.install-django-api = import ./nix-src/install-django-api.nix {
+          pkgs = pkgsAllowUnfree;
+          inherit minimal-required-packages;
+        };
+
+        apps.install-django-api = flake-utils.lib.mkApp {
+          name = "install-django-api";
+          drv = packages.install-django-api;
+        };
 
         devShells.default = pkgsAllowUnfree.mkShell {
           buildInputs = with pkgsAllowUnfree; [

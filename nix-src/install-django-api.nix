@@ -3,7 +3,10 @@ pkgs.stdenv.mkDerivation rec {
   name = "install-django-api";
   buildInputs = with pkgs; [ stdenv ];
   nativeBuildInputs = with pkgs; [ makeWrapper ];
-  propagatedNativeBuildInputs = with pkgs; [ openssh ripgrep ] ++ minimal-required-packages;
+  propagatedNativeBuildInputs = with pkgs; [
+    openssh
+    ripgrep
+   ] ++ minimal-required-packages;
 
   src = builtins.path { path = ./.; name = "install-django-api"; };
   phases = [ "installPhase" ];
