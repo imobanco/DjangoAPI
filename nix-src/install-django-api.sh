@@ -23,6 +23,10 @@ cd "${FOLDER_TO_CLONE}" || echo 'Por algum motivo não foi possível entrar na p
 # Deve ser removido antes de entrar o PR
 git checkout feature/installation-with-nix
 
+# Como o scrip está wrapped com bash e coreutils, espero que seja bem robusto.
+test -d dumps || mkdir dumps
+
+
 # Sempre fazer build?
 CURRENT_DIR="$(pwd)"
 nix develop .# --command bash -c 'cd '"${CURRENT_DIR}"' && make build && make up.logs'
