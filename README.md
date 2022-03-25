@@ -44,7 +44,7 @@ TODO: antes do PR entrar remover especificidade da branch
 ```bash
 nix \
 run \
-'git+ssh://git@github.com/imobanco/DjangoAPI?ref=feature/installation-with-nix&rev=267087b30745bcfad86f29d6de62d5d83613ec49#install-django-api'
+'git+ssh://git@github.com/imobanco/DjangoAPI?ref=feature/installation-with-nix&rev=b742f45cce13361c8ac255cab3e7e456a31250db#install-django-api'
 
 # Após merge o comando que deve ficar aqui no README.md deve ser este:
 nix \
